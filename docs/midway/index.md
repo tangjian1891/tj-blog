@@ -1,3 +1,6 @@
+---
+sidebar: auto
+---
 # 1.Midway
 ## 1.1链接速览
   [midway官方文档](https://www.yuque.com/midwayjs/midway_v2/start_app)  
