@@ -5,8 +5,8 @@
 // };
 
 module.exports = {
-  // base:'/dist/',
-  base: "",
+  base:'/dist/',
+  // base: "",
   lang: "en-US",
   title: "NICE BLOG",
   description: "一个记录学习的blog，如果有能帮助到你的，可以点个star!", //meta描述信息
