@@ -1,5 +1,5 @@
 module.exports = {
-  base:'./',
+  base:'/dist/',
   title: "my-blog", // 设置网站标题
   // dest: "./haha", // 设置输出目录
   themeConfig: {
