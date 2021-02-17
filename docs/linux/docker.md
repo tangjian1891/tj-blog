@@ -1,6 +1,3 @@
----
-sidebar: auto
----
 ### 安装docker
 1. yum 包更新到最新版本
    > yum update

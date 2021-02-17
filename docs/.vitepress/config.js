@@ -1,12 +1,6 @@
-// module.exports = {
-//   title: "NICE BLOG",
-
-//   // sidebar:true
-// };
-
 module.exports = {
-  base:'/dist/',
-  // base: "",
+  // base:'/dist/',
+  base: process.env.NODE_ENV === "production" ? "/nice-blog/" : "",
   lang: "en-US",
   title: "NICE BLOG",
   description: "一个记录学习的blog，如果有能帮助到你的，可以点个star!", //meta描述信息
@@ -30,7 +24,11 @@ module.exports = {
         link: "/recode/movie",
         activeMatch: "^/recode/",
       },
-      { text: "linux", link: "/linux/index" },
+      {
+        text: "linux",
+        link: "/linux/docker",
+        activeMatch: "^/linux/",
+      },
       { text: "midway", link: "/midway/index" },
     ],
 
@@ -38,8 +36,9 @@ module.exports = {
       // "/guide/": getGuideSidebar(),
       // "/config/": getConfigSidebar(),
       // "/": getGuideSidebar(),
-      "/recode": getRecodeSidebar(),
       sidebar: "auto",
+      "/recode": recode(),
+      "/linux": linux(),
     },
   },
 };
@@ -84,8 +83,8 @@ function getConfigSidebar() {
     },
   ];
 }
-// 记录的 侧边栏
-function getRecodeSidebar() {
+// 记录
+function recode() {
   return [
     {
       text: "电影",
@@ -94,6 +93,23 @@ function getRecodeSidebar() {
     {
       text: "书",
       link: "/recode/book",
+    },
+  ];
+}
+
+function linux() {
+  return [
+    {
+      text: "docker相关",
+      link: "/linux/docker",
+    },
+    {
+      text: "marlinos",
+      link: "/linux/marlinos",
+    },
+    {
+      text: "jenkins",
+      link: "/linux/jenkins",
     },
   ];
 }
