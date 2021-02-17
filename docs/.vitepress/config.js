@@ -1,7 +1,8 @@
 module.exports = {
   // base:'/dist/',
-  // base: process.env.NODE_ENV === "production" ? "/nice-blog/" : "",
-  base: "./",
+  base: process.env.NODE_ENV === "production" ? "/nice-blog/" : "",
+  // base: "/dist/",
+  // base: "",
   lang: "en-US",
   title: "NICE BLOG",
   description: "一个记录学习的blog，如果有能帮助到你的，可以点个star!", //meta描述信息
@@ -22,12 +23,12 @@ module.exports = {
       },
       {
         text: "记录",
-        link: "/recode/movie",
+        link: "/recode/movie.html",
         activeMatch: "^/recode/",
       },
       {
         text: "linux",
-        link: "/linux/docker",
+        link: "/linux/docker.html",
         activeMatch: "^/linux/",
       },
       { text: "midway", link: "/midway/index" },
@@ -39,7 +40,7 @@ module.exports = {
       // "/": getGuideSidebar(),
       sidebar: "auto",
       "/recode": recode(),
-      "/linux": linux(),
+      "/linux/": linux(),
     },
   },
 };
@@ -102,15 +103,15 @@ function linux() {
   return [
     {
       text: "docker相关",
-      link: "/linux/docker",
+      link: "/linux/docker.html",
     },
     {
       text: "marlinos",
-      link: "/linux/marlinos",
+      link: "/linux/marlinos.html",
     },
     {
       text: "jenkins",
-      link: "/linux/jenkins",
+      link: "/linux/jenkins.html",
     },
   ];
 }
