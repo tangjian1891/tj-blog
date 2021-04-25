@@ -57,3 +57,9 @@ module.exports={
 
 
 关于vue-cli的配置。可以使用 vue inspect > output.js 打印所有的配置
+> 开始从零增加一个配置。推荐查看webpack的指南，一步一步跟着配置
+```js
+npm i webpack -D
+npm i webpack-cli -D  //在webpack4+需要webpack-cli,包括现在的5，都是需要的
+```
+> 执行npx webpack 即可自动加载webpack.config.js中的配置
