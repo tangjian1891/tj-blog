@@ -55,11 +55,30 @@ module.exports={
 }
 ```
 
-
+## 开始配置
 关于vue-cli的配置。可以使用 vue inspect > output.js 打印所有的配置
 > 开始从零增加一个配置。推荐查看webpack的指南，一步一步跟着配置
 ```js
 npm i webpack -D
 npm i webpack-cli -D  //在webpack4+需要webpack-cli,包括现在的5，都是需要的
 ```
-> 执行npx webpack 即可自动加载webpack.config.js中的配置
+> 执行npx webpack 即可自动加载webpack.config.js中的配置(记得配置对应的配置文件)。或者添加到script标签中
+### loader相关
+1. 想要引入css文件,但是webpack并不能识别。所以无法打入到bundle中。
+> 报错: Module parse failed: Unexpected token
+首先先引入css-loader
+```js
+npm i css-loader -D
+npm i style-loader -D
+```
+在 module.rules:Array<Object> 中进行loader配置 每个对象中都有use和test两个属性，匹配css文件，使用两个loader，一个是解析css文件,一个是将解析后的css模块内容使用style标签自动插入.解析时自右向左，所以必须先使用css-loader解析
+```js
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader',"css-loader"],
+      },
+    ],
+  },
+```
