@@ -115,7 +115,9 @@ console.log(Image); //输出目录图片的绝对地址 file:///C:/Users/tangjia
 
 但是优化没有止境，你可能需要压缩一下你的图片.
 可以使用url-loader做内联。vue-cli的默认值是4096也就是4K大小会被内联。可以将file-loader配置的地方替换为url-loader配置。当符合limit的图片会被做内联处理直接打入bundle中，不符合的图片会在url-loader调用file-loader做路径打包。
+
 **如果只安装了url-loader没有安装file-loader,那么limit没命中的图片会出现打包报错Cannot find module 'file-loader'**
+
 **所以:即使你安装了url-loader，也很推荐安装file-loader，但是配置loader只需配置url-loader一个即可**
 ```js
 npm i url-loader -D
@@ -131,4 +133,38 @@ module:{
   ]
 }
 
+```
+
+3. 字体资源，同2图片资源一致
+
+4. 其余类型的资源。例如csv,xml文件. 注:json默认可解析
+
+```js
+npm i csv-loader xml-loader -D
+// ------------配置------
+module:{
+  rules:[
+    {
+      test:/\.csv$/,
+      use:"csv-loader"
+    },
+    {
+      test:/\.xml$/,
+      use:"xml-loader"
+    },
+  ]
+}
+```
+
+### plugins 先关
+1. 你会发现每次在html中手动引入打包的出来bundle麻烦。使用一个插件 html-webpack-plugin
+
+
+```js
+npm i html-webpack-plugin -D
+// -----配置---
+  plugins:[
+    new HtmlWebpackPlugin()
+  ]
+  // 打包后，会自动生成一个html，并自动引入打包出来的相关bundle
 ```
