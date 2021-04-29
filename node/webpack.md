@@ -168,3 +168,15 @@ npm i html-webpack-plugin -D
   ]
   // 打包后，会自动生成一个html，并自动引入打包出来的相关bundle
 ```
+
+2. 你会发现dist每次都是相同的覆盖，无用的仍然保留。所以需要清理/dist输出目录。 clean-webpack-plugin 清理,使用也很简单
+
+```js
+npm i clean-webpack-plugin -D
+// --------配置----
+plugins:[new CleanWebpackPlugin()]
+
+```
+
+
+https://mp.weixin.qq.com/s/UrIH72bYufUxCoXs54QqlQ
