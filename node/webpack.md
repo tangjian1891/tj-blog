@@ -156,7 +156,7 @@ module:{
 }
 ```
 
-### plugins 先关
+### plugins 相关
 1. 你会发现每次在html中手动引入打包的出来bundle麻烦。使用一个插件 html-webpack-plugin
 
 
@@ -178,5 +178,55 @@ plugins:[new CleanWebpackPlugin()]
 
 ```
 
+### 开发其他配置
+1. 关于source map
+devtool属性,如果不配置的情况下。就是压缩代码，所有代码在一起，
+> 开发模式:我们一般希望更加精准的源码定位，所以需要牺牲速度。增加bundle体积.推荐source-map 就可
+> 生产模式:分两种:1.完全舍弃源码映射，只要打包之后的bundle就行。 2.源码映射与bundle分别打包，部署bundle,源码映射单独部署(可做错误信息监测)。或者限制普通用户访问sourcemap
+ 
+ 分类:
+ 1. 打包后的代码。也就是不配置。那么完全没有sourcemap映射。(一般标准生产)
+ 2. 生成后的代码。（eval）都在一个文件中，不能正确显示行数
+ 3. 转换过的代码。（无法看，不利于定于，一般用于第三方库）
+ 4. 原始源代码。利于精准定位
+    3.1 eval-source-map (在bundle中采用将sourcemap转换为DataUrl后添加到eval中) build慢 rebuild快
+    3.2 source-map 生成外部.map文件(源码级别)  单独的文件，更加灵活
+
+> eval 虽然代码都打在bundle中，但是单个模块拥有区分，可被浏览器解析sourcemap。查看形式变成 入口.js+n_modules
+
+![eval模式](image/eval.jpg)
+
+
+> eval-source-map 浏览器解析时，可以解析出对应的源码文件。 每个模块相互分离，就像你编写那样。
+![eval-source-map模式](image/eval-source-map.jpg)
+
+[sourcemap文档地址](https://www.webpackjs.com/configuration/devtool/)
+
+
+2. 起一个本地服务，便于开发.不然每次都要手动build一下，太麻烦了，热更新才是最好的
+```js
+npm i webpack-dev-server -D
+// V4版本安装，可以再script脚本中加入
+
+  "scripts": {
+    "dev": "webpack-dev-server --open"
+  },
+
+  // V5版本后
+    "scripts": {
+    "dev": "webpack serve --open"
+  },
+  // V5版本的webpack可以采用回退webpack-cli。https://github.com/webpack/webpack-cli/issues/1948 回退webpack-cli版本也行,回退到"webpack-cli": "^3.3.12"，也可以使用V4的启动方式
+
+  // -----------配置----
+  devServer:{
+    contentBase: "./dist2",  //目录
+    port:9000 //端口号
+    hot:true,//默认就是开启热更新的
+  }
+
+```
+
+ 
 
 https://mp.weixin.qq.com/s/UrIH72bYufUxCoXs54QqlQ
