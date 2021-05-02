@@ -114,11 +114,12 @@ console.log(Image); //输出目录图片的绝对地址 file:///C:/Users/tangjia
 ```
 
 但是优化没有止境，你可能需要压缩一下你的图片.
-可以使用url-loader做内联。vue-cli的默认值是4096也就是4K大小会被内联。可以将file-loader配置的地方替换为url-loader配置。当符合limit的图片会被做内联处理直接打入bundle中，不符合的图片会在url-loader调用file-loader做路径打包。
+可以使用 url-loader 做内联。vue-cli 的默认值是 4096 也就是 4K 大小会被内联。可以将 file-loader 配置的地方替换为 url-loader 配置。当符合 limit 的图片会被做内联处理直接打入 bundle 中，不符合的图片会在 url-loader 调用 file-loader 做路径打包。
 
-**如果只安装了url-loader没有安装file-loader,那么limit没命中的图片会出现打包报错Cannot find module 'file-loader'**
+**如果只安装了 url-loader 没有安装 file-loader,那么 limit 没命中的图片会出现打包报错 Cannot find module 'file-loader'**
 
-**所以:即使你安装了url-loader，也很推荐安装file-loader，但是配置loader只需配置url-loader一个即可**
+**所以:即使你安装了 url-loader，也很推荐安装 file-loader，但是配置 loader 只需配置 url-loader 一个即可**
+
 ```js
 npm i url-loader -D
 // -----------配置--------
@@ -135,9 +136,9 @@ module:{
 
 ```
 
-3. 字体资源，同2图片资源一致
+3. 字体资源，同 2 图片资源一致
 
-4. 其余类型的资源。例如csv,xml文件. 注:json默认可解析
+4. 其余类型的资源。例如 csv,xml 文件. 注:json 默认可解析
 
 ```js
 npm i csv-loader xml-loader -D
@@ -157,8 +158,8 @@ module:{
 ```
 
 ### plugins 相关
-1. 你会发现每次在html中手动引入打包的出来bundle麻烦。使用一个插件 html-webpack-plugin
 
+1. 你会发现每次在 html 中手动引入打包的出来 bundle 麻烦。使用一个插件 html-webpack-plugin
 
 ```js
 npm i html-webpack-plugin -D
@@ -169,7 +170,7 @@ npm i html-webpack-plugin -D
   // 打包后，会自动生成一个html，并自动引入打包出来的相关bundle
 ```
 
-2. 你会发现dist每次都是相同的覆盖，无用的仍然保留。所以需要清理/dist输出目录。 clean-webpack-plugin 清理,使用也很简单
+2. 你会发现 dist 每次都是相同的覆盖，无用的仍然保留。所以需要清理/dist 输出目录。 clean-webpack-plugin 清理,使用也很简单
 
 ```js
 npm i clean-webpack-plugin -D
@@ -179,31 +180,32 @@ plugins:[new CleanWebpackPlugin()]
 ```
 
 ### 开发其他配置
-1. 关于source map
-devtool属性,如果不配置的情况下。就是压缩代码，所有代码在一起，
-> 开发模式:我们一般希望更加精准的源码定位，所以需要牺牲速度。增加bundle体积.推荐source-map 就可
-> 生产模式:分两种:1.完全舍弃源码映射，只要打包之后的bundle就行。 2.源码映射与bundle分别打包，部署bundle,源码映射单独部署(可做错误信息监测)。或者限制普通用户访问sourcemap
- 
- 分类:
- 1. 打包后的代码。也就是不配置。那么完全没有sourcemap映射。(一般标准生产)
- 2. 生成后的代码。（eval）都在一个文件中，不能正确显示行数
- 3. 转换过的代码。（无法看，不利于定于，一般用于第三方库）
- 4. 原始源代码。利于精准定位
-    3.1 eval-source-map (在bundle中采用将sourcemap转换为DataUrl后添加到eval中) build慢 rebuild快
-    3.2 source-map 生成外部.map文件(源码级别)  单独的文件，更加灵活
 
-> eval 虽然代码都打在bundle中，但是单个模块拥有区分，可被浏览器解析sourcemap。查看形式变成 入口.js+n_modules
+1. 关于 source map
+   devtool 属性,如果不配置的情况下。就是压缩代码，所有代码在一起，
+   > 开发模式:我们一般希望更加精准的源码定位，所以需要牺牲速度。增加 bundle 体积.推荐 source-map 就可
+   > 生产模式:分两种:1.完全舍弃源码映射，只要打包之后的 bundle 就行。 2.源码映射与 bundle 分别打包，部署 bundle,源码映射单独部署(可做错误信息监测)。或者限制普通用户访问 sourcemap
+
+分类:
+
+1.  打包后的代码。也就是不配置。那么完全没有 sourcemap 映射。(一般标准生产)
+2.  生成后的代码。（eval）都在一个文件中，不能正确显示行数
+3.  转换过的代码。（无法看，不利于定于，一般用于第三方库）
+4.  原始源代码。利于精准定位
+    3.1 eval-source-map (在 bundle 中采用将 sourcemap 转换为 DataUrl 后添加到 eval 中) build 慢 rebuild 快
+    3.2 source-map 生成外部.map 文件(源码级别) 单独的文件，更加灵活
+
+> eval 虽然代码都打在 bundle 中，但是单个模块拥有区分，可被浏览器解析 sourcemap。查看形式变成 入口.js+n_modules
 
 ![eval模式](image/eval.jpg)
 
-
 > eval-source-map 浏览器解析时，可以解析出对应的源码文件。 每个模块相互分离，就像你编写那样。
-![eval-source-map模式](image/eval-source-map.jpg)
+> ![eval-source-map模式](image/eval-source-map.jpg)
 
-[sourcemap文档地址](https://www.webpackjs.com/configuration/devtool/)
+[sourcemap 文档地址](https://www.webpackjs.com/configuration/devtool/)
 
+2. 起一个本地服务，便于开发.不然每次都要手动 build 一下，太麻烦了，热更新才是最好的
 
-2. 起一个本地服务，便于开发.不然每次都要手动build一下，太麻烦了，热更新才是最好的
 ```js
 npm i webpack-dev-server -D
 // V4版本安装，可以再script脚本中加入
@@ -227,6 +229,22 @@ npm i webpack-dev-server -D
 
 ```
 
- 
+3.  是否需要压缩输出。webpack 可根据 mode 自动采用是否压缩。默认 production 为压缩，可手动更改为 mode:"development"，这样打包出来的代码将不会压缩。
+
+    > 开发模式不需要压缩，开发模式下我们需要更多的 sourcemap，更精准的定位，热模块替换。 生产模式需要压缩，生产模式只关注更小更轻的 bundle 和 sourcemap
+
+4.  指定环境。可以使用 NODE 的.process.env.NODE_ENV==='production'判断
+
+```js
+内置插件.  webpack.DefinePlugin 甚至可以重写process.env.NODE_ENV
+// -------------配置----------
+plugins:[
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV':JSON.stringify('这是什么默哀是飒'),
+    'beijjing':JSON.stringify('这是beijjing啊啊啊')
+  })
+]
+
+```
 
 https://mp.weixin.qq.com/s/UrIH72bYufUxCoXs54QqlQ
