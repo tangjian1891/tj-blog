@@ -247,4 +247,38 @@ plugins:[
 
 ```
 
+## vue-cli配置环境变量，配置html-webpack-plugin。
+
+### 1.环境变量
+vue-cli的环境变量默认有三种形式['development','production','test'],使用proceess.env.NODE_ENV可以取到
+- vue-cli-service serve 起开发服务 为development
+- vue-cli-service build 打包 为prodction
+- vue-cli-service test:unit 测试为test
+
+但是我们的实际情况不止，比如打包后还需要区分部署测试环境与生产环境。测试环境需要有调试面板,生产环境需要使用cdn，排除依赖等。
+
+例子: 你需要在某个测试环境中使用调试面板.暂定这个自定义的模式为uat
+```js
+//  ---script启动脚本增加参数---
+"scripts": {
+    "build:uat": "vue-cli-service build --mode uat",
+} 
+
+```
+// ------此时启动模式为uat,会自动加载.env.uat文件,参考下面的mode加载配置文件文档
+.env.uat 文件 
+> 使用自定义mode后，proceess.env.NODE_ENV默认为development，根据自身需求决定是否重写
+
+> 自定义的变量必须要使用VUE_APP_开头.
+```
+# npm run build:uat 就走这个配置
+
+# uat打包，需要手动注入NODE_ENV为'production',否则为'development'
+NODE_ENV=production
+
+# 当前环境的名称 自定义的变量,这样就可以实现在项目中自由使用了
+VUE_APP_MODE=uat
+```
+[mode加载配置文件文档](https://cli.vuejs.org/zh/guide/mode-and-env.html#环境变量)
+
 https://mp.weixin.qq.com/s/UrIH72bYufUxCoXs54QqlQ
