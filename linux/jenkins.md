@@ -19,7 +19,7 @@ java -version        查看安装的java版本
 ### 1.2 下载 jenkins 的 rpm 安装包
 
 最快的方式是去[github](https://github.com/jenkinsci/jenkins/releases)上下载，然后用 xshell+xftp 传到 linux 服务器上
-![avatar](./img/img1.jpg)
+![avatar](./images/img1.jpg)
 
 我的 rpm 包路径(其实放哪无所谓) /jenkins/jenkins-2.278-1.1.noarch.rpm
 
@@ -32,7 +32,7 @@ rpm -ivh jenkins-2.278-1.1.noarch.rpm     解压jenkins
 
 默认是(8080)，有必要修改一下配置文件的端口号,。我比较喜欢用 xftp 修改。
 文件路径/etc/sysconfig/jenkins
-![avatar](./img/img2.jpg)
+![avatar](./images/img2.jpg)
 在第 56 行附近修改自己的端口号
 
 ```
@@ -67,7 +67,7 @@ service jenkins restart
 ### 1.5 打开页面，找到默认密码进入。
 
 需要找到对应的密码。然后登录就行。 cat /var/lib/jenkins/secrets/initialAdminPassword
-![avatar](./img/img3.jpg)
+![avatar](./images/img3.jpg)
 
 ### 1.6 相关插件
 
@@ -96,9 +96,9 @@ yum -y install git
 
 1.  将[1.6相关插件检查](http://192.168.3.9:3000/linux/jenkins.html#_1-6-相关插件)上面的插件检查一下
 2.  将 node 配置上 系统管理->全局工具配置->NodeJs 添加一个
-    ![avatar](./img/img6.jpg)
+    ![avatar](./images/img6.jpg)
 3.  配置下 github 提交的钩子 hook。配置方法。前往自己的 github->对应仓库->settings->Webhooks 添加一个。地址是约定的格式。 假设你 jenkins 为 192.168.0.1:8888 那么配置的地址为 http://192.168.0.1:8888/github-webhook/ 就可以了。
-    ![avatar](./img/img7.jpg)
+    ![avatar](./images/img7.jpg)
 4.  执行的脚本。流程为 装依赖->打包->到工作区找到打包好的文件夹->复制到对应 nginx 下
 
 ```
@@ -120,7 +120,7 @@ cp -r /var/lib/jenkins/workspace/nice-blog/docs/.vitepress/nice-blog  /marlinos/
 需要将文件复制一份到 nginx 中
 cp -r /var/lib/jenkins/workspace/nice-blog/docs/.vitepress/dist /marlinos/nginx/1.18.0/html/nice-blog
 
-![avatar](./img/img5.png)
+![avatar](./images/img5.png)
 
 
 完结！其余碰到的问题，自行百度吧,都是可以解决的。
